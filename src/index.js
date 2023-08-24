@@ -18,11 +18,12 @@ module.exports = async function run() {
       validateSingleCommit,
       validateSingleCommitMatchesPrTitle,
       githubBaseUrl,
-      ignoreLabels
+      ignoreLabels,
+      typesRequiringScope,
     } = parseConfig();
 
     const client = github.getOctokit(process.env.GITHUB_TOKEN, {
-      baseUrl: githubBaseUrl
+      baseUrl: githubBaseUrl,
     });
 
     const contextPullRequest = github.context.payload.pull_request;
@@ -39,10 +40,10 @@ module.exports = async function run() {
     // the user updates the title and re-runs the workflow, it would
     // be outdated. Therefore fetch the pull request via the REST API
     // to ensure we use the current title.
-    const {data: pullRequest} = await client.rest.pulls.get({
+    const { data: pullRequest } = await client.rest.pulls.get({
       owner,
       repo,
-      pull_number: contextPullRequest.number
+      pull_number: contextPullRequest.number,
     });
 
     // Ignore errors if specified labels are added.
@@ -72,7 +73,8 @@ module.exports = async function run() {
           subjectPattern,
           subjectPatternError,
           headerPattern,
-          headerPatternCorrespondence
+          headerPatternCorrespondence,
+          typesRequiringScope,
         });
 
         if (validateSingleCommit) {
@@ -84,7 +86,7 @@ module.exports = async function run() {
             {
               owner,
               repo,
-              pull_number: contextPullRequest.number
+              pull_number: contextPullRequest.number,
             }
           )) {
             commits.push(...response.data);
@@ -114,7 +116,7 @@ module.exports = async function run() {
                 subjectPattern,
                 subjectPatternError,
                 headerPattern,
-                headerPatternCorrespondence
+                headerPatternCorrespondence,
               });
             } catch (error) {
               throw new Error(
@@ -157,7 +159,7 @@ module.exports = async function run() {
           : validationError
           ? 'PR title validation failed'
           : 'Ready for review & merge.',
-        context: 'action-semantic-pull-request'
+        context: 'action-semantic-pull-request',
       });
     }
 

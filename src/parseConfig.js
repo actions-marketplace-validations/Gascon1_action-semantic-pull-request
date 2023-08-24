@@ -74,6 +74,13 @@ module.exports = function parseConfig() {
     ignoreLabels = ConfigParser.parseEnum(process.env.INPUT_IGNORELABELS);
   }
 
+  let typesRequiringScope;
+  if (process.env.INPUT_TYPESREQUIRINGSCOPE) {
+    typesRequiringScope = ConfigParser.parseEnum(
+      process.env.INPUT_TYPESREQUIRINGSCOPE
+    );
+  }
+
   return {
     types,
     scopes,
@@ -87,6 +94,7 @@ module.exports = function parseConfig() {
     validateSingleCommit,
     validateSingleCommitMatchesPrTitle,
     githubBaseUrl,
-    ignoreLabels
+    ignoreLabels,
+    typesRequiringScope,
   };
 };
