@@ -1,11 +1,11 @@
-name: semantic-pull-request
-author: Jan Amann <jan@amann.work>
+name: semantic-pull-request-name
+author: Mikel Gascon <Gascon1>
 description: Ensure your PR title matches the Conventional Commits spec (https://www.conventionalcommits.org/).
 runs:
   using: 'node16'
   main: 'dist/index.js'
 branding:
-  icon: 'shield'
+  icon: 'eye'
   color: 'green'
 inputs:
   types:
@@ -27,7 +27,7 @@ inputs:
     description: "If `subjectPattern` is configured, you can use this property to override the default error message that is shown when the pattern doesn't match. The variables `subject` and `title` can be used within the message."
     required: false
   validateSingleCommit:
-    description: "When using \"Squash and merge\" on a PR with only one commit, GitHub will suggest using that commit message instead of the PR title for the merge commit, and it's easy to commit this by mistake. Enable this option to also validate the commit message for one commit PRs." 
+    description: "When using \"Squash and merge\" on a PR with only one commit, GitHub will suggest using that commit message instead of the PR title for the merge commit, and it's easy to commit this by mistake. Enable this option to also validate the commit message for one commit PRs."
     required: false
   validateSingleCommitMatchesPrTitle:
     description: "Related to `validateSingleCommit` you can opt-in to validate that the PR title matches a single commit to avoid confusion."
@@ -46,4 +46,7 @@ inputs:
     required: false
   wip:
     description: "For work-in-progress PRs you can typically use draft pull requests from Github. However, private repositories on the free plan don't have this option and therefore this action allows you to opt-in to using the special '[WIP]' prefix to indicate this state. This will avoid the validation of the PR title and the pull request checks remain pending. Note that a second check will be reported if this is enabled."
+    required: false
+  typesRequiringScope:
+    description: "If you want to require a scope for certain types, you can configure this here. This is a newline delimited list of types. If this is omitted, all types will require a scope."
     required: false

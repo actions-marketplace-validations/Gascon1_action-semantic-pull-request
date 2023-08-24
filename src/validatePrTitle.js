@@ -77,7 +77,7 @@ module.exports = async function validatePrTitle(
   if (
     requireScope &&
     !result.scope &&
-    typesRequiringScope.includes(result.type)
+    (!typesRequiringScope || typesRequiringScope.includes(result.type))
   ) {
     let message = `No scope found in pull request title "${prTitle}".`;
     if (scopes) {
