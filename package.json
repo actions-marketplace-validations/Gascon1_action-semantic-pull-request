@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amannn/action-semantic-pull-request.git"
+    "url": "git+https://github.com/Gascon1/action-semantic-pull-request.git"
   },
   "keywords": [
     "github-action",
     "conventional-commits"
   ],
-  "author": "Jan Amann <jan@amann.work>",
+  "author": "Mikel Gascon <Gascon1>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amannn/action-semantic-pull-request/issues"
+    "url": "https://github.com/Gascon1/action-semantic-pull-request/issues"
   },
-  "homepage": "https://github.com/amannn/action-semantic-pull-request#readme",
+  "homepage": "https://github.com/Gascon1/action-semantic-pull-request#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
