@@ -16,12 +16,13 @@ module.exports = async function validatePrTitle(
     subjectPattern,
     subjectPatternError,
     headerPattern,
-    headerPatternCorrespondence
+    headerPatternCorrespondence,
+    typesRequiringScope,
   } = {}
 ) {
   if (!types) types = defaultTypes;
 
-  const {parserOpts} = await conventionalCommitsConfig();
+  const { parserOpts } = await conventionalCommitsConfig();
   if (headerPattern) {
     parserOpts.headerPattern = headerPattern;
   }
@@ -73,7 +74,11 @@ module.exports = async function validatePrTitle(
     );
   }
 
-  if (requireScope && !result.scope) {
+  if (
+    requireScope &&
+    !result.scope &&
+    typesRequiringScope.includes(result.type)
+  ) {
     let message = `No scope found in pull request title "${prTitle}".`;
     if (scopes) {
       message += ` Scope must match one of: ${scopes.join(', ')}.`;
@@ -113,7 +118,7 @@ module.exports = async function validatePrTitle(
     if (subjectPatternError) {
       message = formatMessage(subjectPatternError, {
         subject: result.subject,
-        title: prTitle
+        title: prTitle,
       });
     }
     raiseError(message);
